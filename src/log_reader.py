@@ -1,7 +1,7 @@
 from collections import defaultdict
 from feature_extractor import extract_features
 from anomaly_model import train_model, predict_anomaly
-
+from window_aggregator import add_to_window, aggregate_window
 
 
 def read_log_file(file_path):
@@ -16,16 +16,11 @@ def parse_logs(logs):
         if len(parts) < 4:
             continue
 
-        timestamp = parts[0] + " " + parts[1]
-        level = parts[2]
-        message = parts[3]
-
         events.append({
-            "timestamp": timestamp,
-            "level": level,
-            "message": message
+            "timestamp": parts[0] + " " + parts[1],
+            "level": parts[2],
+            "message": parts[3]
         })
-
     return events
 
 
@@ -48,28 +43,34 @@ def detect_anomalies(events):
 
 
 def print_report(report):
-    print("\n--- Anomaly Report ---")
+    print("\n--- Rule-Based Anomaly Report ---")
     for key, value in report.items():
         print(f"{key}: {value}")
 
 
 if __name__ == "__main__":
     log_file_path = "../data/raw_logs/sample_modem.log"
+
     logs = read_log_file(log_file_path)
     events = parse_logs(logs)
+
+    # Rule-based detection
     report = detect_anomalies(events)
     print_report(report)
+
+    # Feature extraction
     features = extract_features(events)
 
-    print("\n--- Extracted Features ---")
-    for key, value in features.items():
-        print(f"{key}: {value}")
+    # Window-based ML detection
+    add_to_window(features)
 
-    model = train_model(features)
-    is_anomaly = predict_anomaly(model, features)
+    if len(features) > 0:
+        window_features = aggregate_window()
+        model = train_model(window_features)
+        is_anomaly = predict_anomaly(model, window_features)
 
-    print("\n--- ML Anomaly Detection ---")
-    if is_anomaly:
-       print("🚨 Anomaly Detected")
-    else:
-       print("✅ System Normal")
+        print("\n--- ML Windowed Detection ---")
+        if is_anomaly:
+            print("🚨 Anomalous Behavior Detected Over Time")
+        else:
+            print("✅ Behavior Normal")
