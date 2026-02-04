@@ -1,13 +1,11 @@
-# Networking Basics Notes
+## Anomaly Detection (Rule-Based)
 
-## TCP
-- Reliable
-- Connection-oriented
-- Retransmissions on packet loss
+Before applying machine learning, systems often use
+rule-based detection to identify abnormal behavior.
 
-## Common Log Keywords
-- INFO: Normal operation
-- WARN: Potential issue
-- ERROR: Failure condition
+Examples:
+- Frequent ERROR logs
+- Repeated packet loss
+- Connection timeouts
 
-Understanding logs is critical for diagnosing system behavior.
+These signals can later be converted into features for ML models.
