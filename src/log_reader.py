@@ -1,4 +1,5 @@
 from collections import defaultdict
+from feature_extractor import extract_features
 
 
 def read_log_file(file_path):
@@ -56,3 +57,9 @@ if __name__ == "__main__":
     events = parse_logs(logs)
     report = detect_anomalies(events)
     print_report(report)
+    features = extract_features(events)
+
+    print("\n--- Extracted Features ---")
+    for key, value in features.items():
+        print(f"{key}: {value}")
+
