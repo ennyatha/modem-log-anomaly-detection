@@ -1,21 +1,11 @@
-# Cellular ML Anomaly Detection
+Current Implementation:
+- Log file ingestion
+- Event parsing
+- Rule-based anomaly detection
+- Summary reporting
 
-This project focuses on building a proof-of-concept machine learning system
-to detect anomalies in cellular and network modem logs.
+Next Steps:
+- Feature extraction
+- Statistical thresholds
+- ML-based anomaly detection
 
-Status: In Progress  
-Expected Completion: March 2026  
-
-Project Goals:
-- Understand network and cellular system behavior
-- Process and analyze modem and network logs
-- Build ML models for anomaly detection
-
-Planned Tech Stack:
-- Python
-- NumPy, Pandas
-- PyTorch
-- Networking fundamentals (TCP/IP, UDP, QUIC)
-
-Learning Philosophy:
-Building systems from first principles with a strong focus on fundamentals.
